@@ -5,10 +5,10 @@ import "./Login.css";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    userType: '', // Updated state to store the selected user type
+    username: "",
+    email: "",
+    password: "",
+    userType: "", // Updated state to store the selected user type
   });
 
   const handleChange = (e) => {
