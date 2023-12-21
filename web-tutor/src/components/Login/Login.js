@@ -1,7 +1,7 @@
 // src/components/Login/Login.js
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import api from "../../services/api"; // Adjust the path based on your folder structure
+//import { useHistory } from "react-router-dom";
+//import api from "../../services/api"; // Adjust the path based on your folder structure
 import { FaUserGraduate, FaUserTie, FaLock } from "react-icons/fa";
 import "./Login.css";
 const Login = () => {
@@ -10,21 +10,13 @@ const Login = () => {
   return (
     <div className="wrapper">
       <form action="">
-        <h1>{isTeacherMode ? 'Teacher Login' : 'Student Login'}</h1>
+        <h1>{isTeacherMode ? "Teacher Login" : "Student Login"}</h1>
         <div className="input-box">
-          <input
-            type="text"
-            placeholder="Username"
-            required
-          />
+          <input type="text" placeholder="Username" required />
           {isTeacherMode ? <FaUserTie /> : <FaUserGraduate />}
         </div>
         <div className="input-box">
-          <input
-            type="password"
-            placeholder="Password"
-            required
-          />
+          <input type="password" placeholder="Password" required />
           <FaLock />
         </div>
         <label>
