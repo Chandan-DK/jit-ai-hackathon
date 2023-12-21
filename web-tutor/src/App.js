@@ -9,6 +9,7 @@ import Assignments from "./components/Assignments/Assignments";
 import Notes from "./components/Notes/Notes";
 import AI from "./components/AI/AI";
 import UserProfile from "./components/UserProfile/UserProfile";
+import Signup from "./components/Login/Signup";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/class-scheduler" element={<ClassScheduler />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup/>} />
+      
       </Routes>
     </Router>
   );

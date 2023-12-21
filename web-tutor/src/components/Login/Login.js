@@ -30,7 +30,7 @@ const Login = () => {
         <button type="submit">Login</button>
         <div className="register-link">
           <p>
-            Don't have an account? <a href="a">Sign Up</a>
+            Don't have an account? <a href="http://localhost:3000/signup">Sign Up</a>
           </p>
         </div>
       </form>
