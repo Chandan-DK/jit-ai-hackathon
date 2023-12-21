@@ -21,12 +21,12 @@ const Header = () => {
       <div className="nav-buttons">
         <div className="button-container">
           <button className="signup-button" onClick={handleSignUpClick}>
-            Sign Up
+            Sign Up <a href="http://localhost:3000/signup"/>
           </button>
         </div>
         <div className="button-container">
           <button className="login-button" onClick={handleLoginClick}>
-            Login
+            Login <a href="http://localhost:3000/login"/>
           </button>
         </div>
       </div>
