@@ -1,22 +1,20 @@
 // src/App.js
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./components/Home/Home";
 import ClassScheduler from "./components/ClassScheduler/ClassScheduler";
 import Login from "./components/Login/Login";
-import NavigationBar from "./components/NavigationBar/NavigationBar";
 import Assignments from "./components/Assignments/Assignments";
 import Notes from "./components/Notes/Notes";
 import AI from "./components/AI/AI";
 import UserProfile from "./components/UserProfile/UserProfile";
 import Signup from "./components/Login/Signup";
+import Landing from "./components/Landing/Landing";
 
 function App() {
   return (
     <Router>
-      <NavigationBar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/assignments" element={<Assignments />} />
         <Route path="/notes" element={<Notes />} />
         <Route path="/ai" element={<AI />} />
@@ -24,7 +22,6 @@ function App() {
         <Route path="/class-scheduler" element={<ClassScheduler />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup/>} />
-      
       </Routes>
     </Router>
   );

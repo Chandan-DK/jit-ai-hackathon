@@ -1,0 +1,21 @@
+/* Landing.css */
+.feature-section-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-section-image-container {
+  margin-bottom: 10px; /* Add margin between image and text */
+}
+
+.feature-section-heading {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.primary-text {
+  font-size: 1.2em;
+  margin-bottom: 150px;
+}
