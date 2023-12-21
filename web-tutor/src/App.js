@@ -1,4 +1,3 @@
-// src/App.js
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ClassScheduler from "./components/ClassScheduler/ClassScheduler";
@@ -9,6 +8,7 @@ import AI from "./components/AI/AI";
 import UserProfile from "./components/UserProfile/UserProfile";
 import Signup from "./components/Login/Signup";
 import Landing from "./components/Landing/Landing";
+import NavigationBar from "./components/NavigationBar/NavigationBar";
 
 function App() {
   return (
@@ -21,8 +21,11 @@ function App() {
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/class-scheduler" element={<ClassScheduler />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup/>} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
+
+      {/* NavigationBar component is always rendered */}
+      <NavigationBar />
     </Router>
   );
 }

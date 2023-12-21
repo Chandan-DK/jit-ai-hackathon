@@ -1,9 +1,16 @@
 // src/components/NavigationBar.js
 import React from "react";
-import { Link } from "react-router-dom";
-import "./NavigationBar.css"; // You can style your navigation bar in a separate CSS file
+import { Link, useLocation } from "react-router-dom";
+import "./NavigationBar.css";
 
 const NavigationBar = () => {
+  const location = useLocation();
+  const restrictedRoutes = ["/login", "/signup", "/"];
+
+  if (restrictedRoutes.includes(location.pathname)) {
+    return null; // Do not render NavigationBar for restricted routes
+  }
+
   return (
     <nav className="navbar">
       <ul className="nav-list">
