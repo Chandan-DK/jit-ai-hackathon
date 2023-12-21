@@ -1,0 +1,79 @@
+/* student_dashboard.css */
+
+.student-dashboard {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  align-items: left;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin: 0;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+
+.dropdown-menu {
+  position: fixed;
+  top: 265px;
+  right: 520px;
+  list-style: none;
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: none; /* Hide by default */
+}
+
+.dropdown-menu.show {
+  display: block; /* Show when dropdown is open */
+}
+
+.dropdown-menu li {
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.dropdown-menu a {
+  text-decoration: none;
+  color: black;
+}
+
+.user-info {
+  padding: 20px;
+}
+
+.flex-boxes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-box {
+  flex: 1;
+  padding: 20px;
+  margin: 20px;
+  border: 5px solid #ddd;
+  border-radius: 5px;
+}
+
+.upcoming-classes {
+  background-color: #fff;
+}
+
+.attendance-record {
+  background-color: #fff;
+}
