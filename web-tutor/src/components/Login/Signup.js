@@ -1,14 +1,17 @@
+// components/Login/Signup.js
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import "./Login.css";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
-    userType: "", // Updated state to store the selected user type
+    userType: "",
   });
 
   const handleChange = (e) => {
@@ -27,9 +30,22 @@ const Signup = () => {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    // Fix: Change from handleSignup to handleSubmit
+    e.preventDefault();
+
+    try {
+      const response = await api.signupUser(formData);
+      console.log("User signed up successfully:", response);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error signing up:", error);
+    }
+  };
+
   return (
     <div className="wrap">
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <h1>SignUp</h1>
         <div className="ipbox">
           <input
@@ -75,6 +91,7 @@ const Signup = () => {
             </select>
           </label>
         </div>
+        <button type="submit">Sign Up</button>
       </form>
       {/* Display selected user type for testing */}
       <p>Selected User Type: {formData.userType}</p>

@@ -1,14 +1,16 @@
-// tutoring-backend/server.js
 const express = require("express");
 const mongoose = require("mongoose");
 const axios = require("axios");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
+app.use(cors({ origin: "http://localhost:3000" }));
+
 const port = process.env.PORT || 5000;
 
 const studentsConnection = mongoose.createConnection(
-  process.env.MONGODB_URI_STUDENTS,
+  "mongodb://127.0.0.1:27017/Student", // Update the database name
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -16,7 +18,7 @@ const studentsConnection = mongoose.createConnection(
 );
 
 const teachersConnection = mongoose.createConnection(
-  process.env.MONGODB_URI_TEACHERS,
+  "mongodb://127.0.0.1:27017/Teacher", // Update the database name
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -33,6 +35,17 @@ teachersConnection.on("connected", () => {
 
 // Middleware to parse JSON
 app.use(express.json());
+
+// Define user schema and models
+const userSchema = new mongoose.Schema({
+  username: String,
+  email: String,
+  password: String,
+  userType: String,
+});
+
+const Student = studentsConnection.model("Student", userSchema);
+const Teacher = teachersConnection.model("Teacher", userSchema);
 
 // Basic route
 app.get("/", (req, res) => {
@@ -65,6 +78,22 @@ app.post("/api/openai/chat", async (req, res) => {
     );
 
     res.json({ output: response.data.choices[0].message.content });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Signup route
+app.post("/signup", async (req, res) => {
+  const { username, email, password, userType } = req.body;
+
+  try {
+    const User = userType === "student" ? Student : Teacher;
+    const newUser = new User({ username, email, password, userType });
+    await newUser.save();
+
+    res.status(201).json({ message: "User created successfully!" });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal Server Error" });

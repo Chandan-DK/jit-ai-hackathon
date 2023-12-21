@@ -1,15 +1,21 @@
-// src/services/api.js
+// services/api.js
+
 import axios from "axios";
 
-const instance = axios.create({
-  baseURL: "http://localhost:5000", // Adjust the base URL based on your Flask backend's address
-  timeout: 5000, // Set the timeout for requests (milliseconds)
-  headers: {
-    "Content-Type": "application/json",
-    // Add any additional headers as needed
-  },
+const api = axios.create({
+  baseURL: "http://localhost:5000", // Update with your backend server URL
 });
 
-// Add interceptors or additional configurations if needed
+// Example frontend code making a signup request
+const signupUser = async (userData) => {
+  try {
+    const response = await api.post("/signup", userData);
+    console.log(response.data); // handle the successful response
+  } catch (error) {
+    console.error("Error signing up:", error.message);
+  }
+};
 
-export default instance;
+export default {
+  signupUser,
+};
