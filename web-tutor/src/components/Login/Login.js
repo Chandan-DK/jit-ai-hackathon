@@ -2,29 +2,48 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../../services/api"; // Adjust the path based on your folder structure
+import { FaUserGraduate, FaUserTie, FaLock } from "react-icons/fa";
 import "./Login.css";
 const Login = () => {
-  // ... (omitting previous code for brevity)
+  const [isTeacherMode, setIsTeacherMode] = useState(false);
 
-  const handleLogin = async () => {
-    try {
-      const response = await api.post("/login", {
-        // username,
-        //password,
-      });
-
-      // Handle successful login
-      console.log(response.data);
-
-      // Redirect to the home page after successful login
-      //  history.push("/");
-    } catch (error) {
-      // Handle login failure
-      console.error("Login failed", error);
-    }
-  };
-
-  // ... (omitting the rest of the code for brevity)
+  return (
+    <div className="wrapper">
+      <form action="">
+        <h1>{isTeacherMode ? 'Teacher Login' : 'Student Login'}</h1>
+        <div className="input-box">
+          <input
+            type="text"
+            placeholder="Username"
+            required
+          />
+          {isTeacherMode ? <FaUserTie /> : <FaUserGraduate />}
+        </div>
+        <div className="input-box">
+          <input
+            type="password"
+            placeholder="Password"
+            required
+          />
+          <FaLock />
+        </div>
+        <label>
+          <input
+            type="checkbox"
+            checked={isTeacherMode}
+            onChange={() => setIsTeacherMode(!isTeacherMode)}
+          />
+          Teacher
+        </label>
+        <button type="submit">Login</button>
+        <div className="register-link">
+          <p>
+            Don't have an account? <a href="a">Sign Up</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default Login;
