@@ -37,6 +37,7 @@ function TeacherDashboard() {
     const newClass = {
       student: selectedStudent,
       subject: 'YourSubject', // Replace with the actual subject
+      meetLink: meetLink,
       startTime,
       endTime,
     };
@@ -119,6 +120,7 @@ function TeacherDashboard() {
           <div key={index} className="class-card">
             <p>Student: {createdClass.student}</p>
             <p>Subject: {createdClass.subject}</p>
+            <p>Meet Link: {createdClass.meetLink}</p>
             <p>Start Time: {createdClass.startTime}</p>
             <p>End Time: {createdClass.endTime}</p>
           </div>
