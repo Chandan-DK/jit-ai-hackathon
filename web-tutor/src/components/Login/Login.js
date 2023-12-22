@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaUserGraduate, FaUserTie, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import loginApi from "../../services/api"; // Adjust the path based on your folder structure
+import loginApi from "../../services/api";
 import "./Login.css";
 
 const Login = () => {
@@ -9,7 +9,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,9 +21,17 @@ const Login = () => {
         isTeacher: isTeacherMode,
       });
 
-      // Handle successful login, e.g., store token in local storage
-      // Redirect to Home or do other necessary actions
-      navigate("/home"); // Use navigate instead of history.push
+      // Assuming the response includes information about the user type
+      const userType = response.userType;
+
+      // Redirect based on user type
+      if (userType === "teacher") {
+        navigate("/teacher-dashboard");
+      } else if (userType === "student") {
+        navigate("/student-dashboard");
+      } else {
+        navigate("/home");
+      }
     } catch (error) {
       setError("Wrong username or password");
     }
