@@ -96,6 +96,16 @@ function TeacherDashboard() {
     }
   };
 
+  const handleCancelClass = (cancelledClass) => {
+    // Filter out the cancelled class from the state
+    const updatedClasses = createdClasses.filter(
+      (classItem) => classItem !== cancelledClass
+    );
+
+    // Update the state to trigger a re-render without the cancelled class
+    setCreatedClasses(updatedClasses);
+  };
+
   return (
     <div className="teacher-dashboard">
       <header>
@@ -185,6 +195,9 @@ function TeacherDashboard() {
             </p>
             <p>Start Time: {createdClass.startTime}</p>
             <p>End Time: {createdClass.endTime}</p>
+            <button onClick={() => handleCancelClass(createdClass)}>
+              Cancel
+            </button>
           </div>
         ))}
       </section>
