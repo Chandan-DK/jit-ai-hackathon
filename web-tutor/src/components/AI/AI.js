@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./AI.css";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
@@ -10,7 +10,7 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 
-const API_KEY = "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";
+const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
 const systemMessage = {
   role: "system",
@@ -74,6 +74,9 @@ function AI() {
           await new Promise((resolve) => setTimeout(resolve, delay));
           return processMessageToChatGPT(chatMessages, retries - 1);
         } else {
+          console.error(
+            `ChatGPT API request failed with status: ${response.status}`
+          );
           throw new Error(
             `ChatGPT API request failed with status: ${response.status}`
           );
@@ -103,7 +106,7 @@ function AI() {
 
   return (
     <div className="App">
-      <div style={{ position: "relative", height: "800px", width: "700px" }}>
+      <div style={{ position: "relative", height: "600px", width: "700px" }}>
         <MainContainer>
           <ChatContainer>
             <MessageList

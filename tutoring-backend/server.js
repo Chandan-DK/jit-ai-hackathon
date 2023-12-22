@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const axios = require("axios");
 const cors = require("cors");
-// Remove bcrypt import and hashing logic
+const openaiRoutes = require("./routes/openaiRoutes");
 
 require("dotenv").config();
 
@@ -12,7 +12,7 @@ app.use(cors({ origin: "http://localhost:3000" }));
 const port = process.env.PORT || 5000;
 
 const studentsConnection = mongoose.createConnection(
-  "mongodb://127.0.0.1:27017/Student",
+  process.env.MONGODB_URI_STUDENTS,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -20,7 +20,7 @@ const studentsConnection = mongoose.createConnection(
 );
 
 const teachersConnection = mongoose.createConnection(
-  "mongodb://127.0.0.1:27017/Teacher",
+  process.env.MONGODB_URI_TEACHERS,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
