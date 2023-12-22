@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const axios = require("axios");
 const cors = require("cors");
 const openaiRoutes = require("./routes/openaiRoutes");
+const nodemailer = require("nodemailer"); // Import nodemailer
 
 require("dotenv").config();
 
@@ -43,8 +44,6 @@ const userSchema = new mongoose.Schema({
   password: String,
   userType: String,
 });
-
-// Remove password hashing middleware
 
 const Student = studentsConnection.model("Student", userSchema);
 const Teacher = teachersConnection.model("Teacher", userSchema);
@@ -123,7 +122,75 @@ app.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    res.status(200).json({ message: "Login successful!" });
+    res
+      .status(200)
+      .json({ message: "Login successful!", userType: user.userType });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.post("/create-class", async (req, res) => {
+  const { student, subject, meetLink, startTime, endTime } = req.body;
+
+  try {
+    // Save the class details to your database or perform necessary actions
+    // For example, you can create a new collection/model for classes and save the details there
+
+    // For now, let's assume you have a Class model
+    // Replace 'YourClassModel' with the actual model name you have or create a new model
+    const YourClassModel = teachersConnection.model("YourClass", {
+      student,
+      subject,
+      meetLink,
+      startTime,
+      endTime,
+    });
+
+    const newClass = new YourClassModel({
+      student,
+      subject,
+      meetLink,
+      startTime,
+      endTime,
+    });
+
+    await newClass.save();
+
+    res.status(201).json({ message: "Class created successfully!" });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Define your nodemailer transporter outside the route handler
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.SENDER_MAIL,
+    pass: process.env.SENDER_PWD,
+  },
+});
+
+// Endpoint to send emails
+app.post("/send-email", async (req, res) => {
+  console.log("Send email called");
+  const { to, subject, body } = req.body;
+
+  try {
+    // Use nodemailer transporter to send emails
+    const mailOptions = {
+      from: process.env.SENDER_MAIL,
+      to: "1dt21cs031@dsatm.edu.in",
+      subject,
+      text: body,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: "Email sent successfully!" });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal Server Error" });
