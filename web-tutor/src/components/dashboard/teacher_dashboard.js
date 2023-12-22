@@ -120,7 +120,8 @@ function TeacherDashboard() {
           <div key={index} className="class-card">
             <p>Student: {createdClass.student}</p>
             <p>Subject: {createdClass.subject}</p>
-            <p>Meet Link: {createdClass.meetLink}</p>
+            <p>Meet Link: <a href={createdClass.meetLink}>{createdClass.meetLink}</a>
+            </p>
             <p>Start Time: {createdClass.startTime}</p>
             <p>End Time: {createdClass.endTime}</p>
           </div>
