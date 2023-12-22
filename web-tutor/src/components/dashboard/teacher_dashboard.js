@@ -11,6 +11,24 @@ function TeacherDashboard() {
   const [selectedStudent, setSelectedStudent] = useState("");
   const students = ["John", "Richards", "Mike"]; // Replace with your actual list of student names
 
+  // Add a state to track attendance status
+  const [attendanceStatus, setAttendanceStatus] = useState(
+    Array(students.length).fill(true)
+  );
+
+  const handleToggleAttendance = (index) => {
+    // Toggle the attendance status
+    const updatedAttendanceStatus = [...attendanceStatus];
+    updatedAttendanceStatus[index] = !updatedAttendanceStatus[index];
+
+    // If "Yes" button is clicked, disable the "No" button and vice versa
+    if (updatedAttendanceStatus[index]) {
+      updatedAttendanceStatus[index === 0 ? 1 : 0] = false;
+    }
+
+    setAttendanceStatus(updatedAttendanceStatus);
+  };
+
   const handleSelectChange = (e) => {
     setSelectedStudent(e.target.value);
   };
@@ -98,6 +116,29 @@ function TeacherDashboard() {
 
   const handleCancelClass = async (cancelledClass) => {
     const sendCancelEmailURL = "http://localhost:5000/send-cancel-email";
+
+    // Make an API call to send a cancel email
+    const sendEmailResponse = await fetch(sendCancelEmailURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: "john@example.com",
+        subject: "Class Details",
+        body: `Class was cancelled.\nDetails:\n\nStudent: ${
+          cancelledClass.student || "N/A"
+        }\nSubject: ${cancelledClass.subject || "N/A"}\nMeet Link: ${
+          cancelledClass.meetLink || "N/A"
+        }\nStart Time: ${cancelledClass.startTime || "N/A"}\nEnd Time: ${
+          cancelledClass.endTime || "N/A"
+        }`,
+      }),
+    });
+
+    if (!sendEmailResponse.ok) {
+      throw new Error("Failed to send cancel email notification.");
+    }
     // Filter out the cancelled class from the state
     const updatedClasses = createdClasses.filter(
       (classItem) => classItem !== cancelledClass
@@ -105,23 +146,6 @@ function TeacherDashboard() {
 
     // Update the state to trigger a re-render without the cancelled class
     setCreatedClasses(updatedClasses);
-
-     // Make an API call to send a cancel email
-     const sendEmailResponse = await fetch(sendCancelEmailURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        to: "john@example.com", // Replace with the actual student's email
-        subject: "Class Details",
-        body: `Class was cancelled.\nDetails:\n\nStudent: ${cancelledClass.student}\nSubject: ${cancelledClass.subject}\nMeet Link: ${cancelledClass.meetLink}\nStart Time: ${cancelledClass.startTime}\nEnd Time: ${cancelledClass.endTime}`,
-      }),
-    });
-
-    if (!sendEmailResponse.ok) {
-      throw new Error("Failed to send cancel email notification.");
-    }
   };
 
   return (
@@ -200,11 +224,15 @@ function TeacherDashboard() {
         </form>
       </section>
 
-      {/* Display upcoming classes as cards */}
       <section className="upcoming-classes">
-        <h3>Upcoming Classes</h3>
+        <h3>Classes</h3>
         {createdClasses.map((createdClass, index) => (
-          <div key={index} className="class-card">
+          <div
+            key={index}
+            className={`class-card ${
+              attendanceStatus[index] ? "attended" : ""
+            }`}
+          >
             <p>Student: {createdClass.student}</p>
             <p>Subject: {createdClass.subject}</p>
             <p>
@@ -213,7 +241,38 @@ function TeacherDashboard() {
             </p>
             <p>Start Time: {createdClass.startTime}</p>
             <p>End Time: {createdClass.endTime}</p>
-            <button onClick={() => handleCancelClass(createdClass)}>
+            <div className="attendance-section">
+              <span>Attendance:</span>
+              <button
+                onClick={() => handleToggleAttendance(index)}
+                className={`attendance-status-button ${
+                  attendanceStatus[index] ? "attended" : ""
+                }`}
+                style={{
+                  backgroundColor: attendanceStatus[index] ? "green" : "",
+                }}
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => handleToggleAttendance(index)}
+                className={`attendance-status-button ${
+                  attendanceStatus[index] === false ? "attended" : ""
+                }`}
+                style={{
+                  backgroundColor:
+                    attendanceStatus[index] === false ? "red" : "",
+                }}
+              >
+                No
+              </button>
+            </div>
+            <button
+              onClick={() => handleCancelClass(createdClass)}
+              className={`cancel-button ${
+                attendanceStatus[index] ? "attended" : ""
+              }`}
+            >
               Cancel
             </button>
           </div>

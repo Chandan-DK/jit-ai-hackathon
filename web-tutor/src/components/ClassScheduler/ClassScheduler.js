@@ -1,40 +1,22 @@
-// src/components/ClassScheduler/ClassScheduler.js
-import React, { useEffect, useState } from "react";
-import api from "../../services/api"; // Adjust the path based on your folder structure
+import React from "react";
 
 const ClassScheduler = () => {
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await api.get("/events"); // Assuming you've set up the backend route '/events'
-        setEvents(response.data.events);
-      } catch (error) {
-        console.error("Error fetching events:", error);
-      }
-    };
-
-    fetchEvents();
-  }, []);
-
   return (
     <div className="class-scheduler-container">
-      <h2>Class Scheduler</h2>
-      <ul>
-        {events.map((event) => (
-          <li key={event.summary}>
-            <strong>{event.summary}</strong> - {event.start} to {event.end}{" "}
-            <a
-              href={event.hangoutLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Join Google Meet
-            </a>
-          </li>
-        ))}
-      </ul>
+      {/* Embed Google Calendar code here */}
+      <div style={{ textAlign: "center", margin: "20px" }}>
+        <iframe
+          src="https://calendar.google.com/calendar/embed?src=johncharlesjt2003%40gmail.com&ctz=UTC"
+          style={{
+            border: "0",
+            width: "800px",
+            height: "600px",
+            frameborder: "0",
+            scrolling: "no",
+          }}
+          title="Google Calendar"
+        />
+      </div>
     </div>
   );
 };

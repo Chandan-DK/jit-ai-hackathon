@@ -1,7 +1,6 @@
-// src/components/Notes.js
-import React from "react";
-import "./Notes.css"; // Adjust the path based on your folder structure
-import { FaFilePdf } from "react-icons/fa"; // Import the PDF icon
+import React, { useState } from "react";
+import { FaFilePdf } from "react-icons/fa";
+import "./Notes.css";
 
 const notesData = [
   {
@@ -24,15 +23,41 @@ const notesData = [
 ];
 
 const Notes = () => {
+  const [uploadedNotes, setUploadedNotes] = useState([]);
+  const [fileInput, setFileInput] = useState(null);
+
+  const handleFileUpload = (event) => {
+    const uploadedFile = event.target.files[0];
+
+    if (uploadedFile) {
+      const uploadedNote = {
+        id: uploadedNotes.length + 1,
+        noteTitle: uploadedFile.name,
+        noteLink: URL.createObjectURL(uploadedFile),
+      };
+
+      setUploadedNotes([...uploadedNotes, uploadedNote]);
+    }
+  };
+
   return (
     <div className="notes-container">
       <h2>Notes</h2>
-      {notesData.map((note) => (
+      <input
+        type="file"
+        accept=".pdf"
+        onChange={handleFileUpload}
+        ref={(input) => setFileInput(input)}
+        style={{ display: "none" }}
+      />
+      <button onClick={() => fileInput.click()}>Upload Notes</button>
+
+      {[...notesData, ...uploadedNotes].map((note) => (
         <div key={note.id} className="note-card">
           <div className="note-header">
-            <h3>{note.subject}</h3>
-            <p>{`Teacher: ${note.teacher}`}</p>
-            <p>{`Chapter: ${note.chapter}`}</p>
+            <h3>{note.subject || "Notes"}</h3>
+            <p>{`Teacher: ${note.teacher || "Prof. Nagraj"}`}</p>
+            <p>{`Chapter: ${note.chapter || "CO"}`}</p>
           </div>
           <div className="note-details">
             <span>{note.noteTitle}</span>
