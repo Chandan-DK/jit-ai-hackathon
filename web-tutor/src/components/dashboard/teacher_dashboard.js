@@ -7,6 +7,14 @@ function TeacherDashboard() {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
 
+  // Using mock students here right now.
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const students = ['John', 'Richards', 'Mike']; // Replace with your actual list of student names
+
+  const handleSelectChange = (e) => {
+    setSelectedStudent(e.target.value);
+  };
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -17,6 +25,11 @@ function TeacherDashboard() {
   };
 
   const handleCreateClass = () => {
+    // Check if all required fields are filled
+    if (!selectedStudent || !meetLink || !startTime || !endTime) {
+      alert('Please fill in all fields before creating a class.');
+      return;
+    }
     // Perform actions for creating a class using meetLink, startTime, and endTime
     console.log('Creating a class with Meet Link:', meetLink);
     console.log('Start Time:', startTime);
@@ -24,7 +37,8 @@ function TeacherDashboard() {
   };
 
   return (
-    <div className="student-dashboard">
+    <div className="teacher-dashboard">
+
       <header>
         <h1>Teacher Dashboard</h1>
         <button className="dropdown-toggle" onClick={toggleDropdown}>
@@ -51,7 +65,7 @@ function TeacherDashboard() {
           {/* Display upcoming class data here */}
         </div>
         <div className="flex-box attendance-record">
-          <h3>studenlist</h3>
+          <h3>Student List</h3>
           <p>john</p>
           <p>richards</p>
           <p>mike</p>
@@ -61,6 +75,17 @@ function TeacherDashboard() {
       {/* "Create a Class" Form */}
       <section className="create-class-form">
         <h3>Create a Class</h3>
+        <label>
+          Select Student:
+          <select value={selectedStudent} onChange={handleSelectChange}>
+            <option value="">Select a student</option>
+            {students.map((student, index) => (
+              <option key={index} value={student}>
+                {student}
+              </option>
+            ))}
+          </select>
+        </label>
         <label>
           Google Meet Link:
           <input type="text" value={meetLink} onChange={(e) => setMeetLink(e.target.value)} />
