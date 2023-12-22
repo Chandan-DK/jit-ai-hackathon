@@ -96,7 +96,8 @@ function TeacherDashboard() {
     }
   };
 
-  const handleCancelClass = (cancelledClass) => {
+  const handleCancelClass = async (cancelledClass) => {
+    const sendCancelEmailURL = "http://localhost:5000/send-cancel-email";
     // Filter out the cancelled class from the state
     const updatedClasses = createdClasses.filter(
       (classItem) => classItem !== cancelledClass
@@ -104,6 +105,23 @@ function TeacherDashboard() {
 
     // Update the state to trigger a re-render without the cancelled class
     setCreatedClasses(updatedClasses);
+
+     // Make an API call to send a cancel email
+     const sendEmailResponse = await fetch(sendCancelEmailURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: "john@example.com", // Replace with the actual student's email
+        subject: "Class Details",
+        body: `Class was cancelled.\nDetails:\n\nStudent: ${cancelledClass.student}\nSubject: ${cancelledClass.subject}\nMeet Link: ${cancelledClass.meetLink}\nStart Time: ${cancelledClass.startTime}\nEnd Time: ${cancelledClass.endTime}`,
+      }),
+    });
+
+    if (!sendEmailResponse.ok) {
+      throw new Error("Failed to send cancel email notification.");
+    }
   };
 
   return (

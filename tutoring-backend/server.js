@@ -197,6 +197,29 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
+// Endpoint to send cancel emails
+app.post("/send-cancel-email", async (req, res) => {
+  console.log("Cancel email endpoint called");
+  const { to, subject, body } = req.body;
+
+  try {
+    // Use nodemailer transporter to send emails
+    const mailOptions = {
+      from: process.env.SENDER_MAIL,
+      to: "1dt21cs031@dsatm.edu.in",
+      subject,
+      text: "Class Was Cancelled" + body,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: "Cancel email sent successfully!" });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
