@@ -226,6 +226,7 @@ function TeacherDashboard() {
 
       <section className="upcoming-classes">
         <h3>Classes</h3>
+        <h3>Classes</h3>
         {createdClasses.map((createdClass, index) => (
           <div
             key={index}
