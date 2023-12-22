@@ -89,19 +89,6 @@ function StudentDashboard() {
     });
   }, [assignmentSubmissionPercentage]);
 
-  const handleFeedbackSubmit = () => {
-    // Perform actions to send feedback (replace with actual logic)
-
-    // For demonstration purposes, we'll just log the feedback message
-    console.log("Feedback submitted:", feedbackMessage);
-
-    // Update the state to indicate that feedback has been sent
-    setFeedbackSent(true);
-
-    // Optionally, you can reset the feedback message after submission
-    setFeedbackMessage("");
-  };
-
   return (
     <div className="student-dashboard">
       <header>
@@ -133,13 +120,9 @@ function StudentDashboard() {
         </div>
         <div className="flex-box feedback-section">
           <h3>Send Feedback</h3>
-          <textarea
-            value={feedbackMessage}
-            onChange={(e) => setFeedbackMessage(e.target.value)}
-            placeholder="Type your feedback here..."
-          />
-          <button onClick={handleFeedbackSubmit}>Send</button>
-          {feedbackSent && <p>Feedback sent successfully!</p>}
+          <button onClick={() => (window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSc3S2q98hb4jeqeyuAWp_UpOuK6uPdouSiIjhELWws8tv4KXA/viewform')}>
+            Fill Feedback Form
+          </button>
         </div>
       </section>
     </div>
