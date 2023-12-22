@@ -18,6 +18,7 @@ import Alerts from "./components/Alerts/Alerts";
 import StudentDashboard from "./components/dashboard/student_dashboard";
 import TeacherDashboard from "./components/dashboard/teacher_dashboard";
 import AdminDashboard from "./components/dashboard/admin_dashboard";
+import Chatbot from "./components/Chatbot/Chatbot";
 function App() {
   return (
     <Router>
@@ -34,6 +35,7 @@ function App() {
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/chatbot" element={<Chatbot />} />
       </Routes>
 
       <NavigationBar />
