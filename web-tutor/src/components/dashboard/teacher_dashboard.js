@@ -3,6 +3,9 @@ import './student_dashboard';
 
 function TeacherDashboard() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [meetLink, setMeetLink] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -11,6 +14,13 @@ function TeacherDashboard() {
   const handleMenuItemClick = (menuItem) => {
     console.log(`Clicked on ${menuItem}`);
     // You can add logic here to navigate to the respective section/page or perform other actions
+  };
+
+  const handleCreateClass = () => {
+    // Perform actions for creating a class using meetLink, startTime, and endTime
+    console.log('Creating a class with Meet Link:', meetLink);
+    console.log('Start Time:', startTime);
+    console.log('End Time:', endTime);
   };
 
   return (
@@ -46,6 +56,24 @@ function TeacherDashboard() {
           <p>richards</p>
           <p>mike</p>
         </div>
+      </section>
+
+      {/* "Create a Class" Form */}
+      <section className="create-class-form">
+        <h3>Create a Class</h3>
+        <label>
+          Google Meet Link:
+          <input type="text" value={meetLink} onChange={(e) => setMeetLink(e.target.value)} />
+        </label>
+        <label>
+          Start Time:
+          <input type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
+        </label>
+        <label>
+          End Time:
+          <input type="datetime-local" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
+        </label>
+        <button onClick={handleCreateClass}>Create Class</button>
       </section>
     </div>
   );
