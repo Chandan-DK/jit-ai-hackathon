@@ -1,0 +1,22 @@
+/* Alerts.css */
+.alerts-container {
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .assignment-section,
+  .class-section,
+  .timer-section {
+    margin-top: 10px;
+  }
+  
+  .timer-section p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .timer-section button {
+    margin-right: 10px;
+  }
+  

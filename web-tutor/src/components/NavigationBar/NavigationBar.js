@@ -30,6 +30,9 @@ const NavigationBar = () => {
           <Link to="/ai">AI</Link>
         </li>
         <li className="nav-item">
+          <Link to="/alerts">Alerts</Link>
+        </li>
+        <li className="nav-item">
           <Link to="/profile">User_Name</Link>
         </li>
       </ul>
