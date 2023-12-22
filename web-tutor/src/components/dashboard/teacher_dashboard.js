@@ -24,16 +24,31 @@ function TeacherDashboard() {
     // You can add logic here to navigate to the respective section/page or perform other actions
   };
 
+  const [createdClasses, setCreatedClasses] = useState([]);
+
   const handleCreateClass = () => {
     // Check if all required fields are filled
     if (!selectedStudent || !meetLink || !startTime || !endTime) {
       alert('Please fill in all fields before creating a class.');
       return;
     }
-    // Perform actions for creating a class using meetLink, startTime, and endTime
-    console.log('Creating a class with Meet Link:', meetLink);
-    console.log('Start Time:', startTime);
-    console.log('End Time:', endTime);
+
+    // Create a new class object
+    const newClass = {
+      student: selectedStudent,
+      subject: 'YourSubject', // Replace with the actual subject
+      startTime,
+      endTime,
+    };
+
+    // Add the new class to the state
+    setCreatedClasses((prevClasses) => [...prevClasses, newClass]);
+
+    // Clear the input fields after creating a class
+    setMeetLink('');
+    setStartTime('');
+    setEndTime('');
+    setSelectedStudent('');
   };
 
   return (
@@ -60,10 +75,6 @@ function TeacherDashboard() {
       </section>
 
       <section className="flex-boxes">
-        <div className="flex-box upcoming-classes">
-          <h3>Upcoming Classes</h3>
-          {/* Display upcoming class data here */}
-        </div>
         <div className="flex-box attendance-record">
           <h3>Student List</h3>
           <p>john</p>
@@ -99,6 +110,19 @@ function TeacherDashboard() {
           <input type="datetime-local" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
         </label>
         <button onClick={handleCreateClass}>Create Class</button>
+      </section>
+
+      {/* Display upcoming classes as cards */}
+      <section className="upcoming-classes">
+        <h3>Upcoming Classes</h3>
+        {createdClasses.map((createdClass, index) => (
+          <div key={index} className="class-card">
+            <p>Student: {createdClass.student}</p>
+            <p>Subject: {createdClass.subject}</p>
+            <p>Start Time: {createdClass.startTime}</p>
+            <p>End Time: {createdClass.endTime}</p>
+          </div>
+        ))}
       </section>
     </div>
   );
