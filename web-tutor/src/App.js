@@ -29,13 +29,13 @@ function App() {
         <Route path="/notes" element={<Notes />} />
         <Route path="/ai" element={<AI />} />
         <Route path="/profile" element={<UserProfile />} />
-        <Route path="/class-scheduler" element={<ClassScheduler />} />
+        <Route path="/classscheduler" element={<ClassScheduler />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/alerts" element={<Alerts />} />
-        <Route path="/student-dashboard" element={<StudentDashboard />} />
-        <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/studentdashboard" element={<StudentDashboard />} />
+        <Route path="/teacherdashboard" element={<TeacherDashboard />} />
+        <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="/chatbot" element={<Chatbot />} />
         <Route path="/receipts" element={<Receipts />} />
       </Routes>
