@@ -19,6 +19,7 @@ import StudentDashboard from "./components/dashboard/student_dashboard";
 import TeacherDashboard from "./components/dashboard/teacher_dashboard";
 import AdminDashboard from "./components/dashboard/admin_dashboard";
 import Chatbot from "./components/Chatbot/Chatbot";
+import Receipts from "./components/Receipts/Receipts";
 function App() {
   return (
     <Router>
@@ -36,6 +37,7 @@ function App() {
         <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/chatbot" element={<Chatbot />} />
+        <Route path="/receipts" element={<Receipts />} />
       </Routes>
 
       <NavigationBar />

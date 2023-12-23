@@ -48,6 +48,94 @@ const userSchema = new mongoose.Schema({
 const Student = studentsConnection.model("Student", userSchema);
 const Teacher = teachersConnection.model("Teacher", userSchema);
 
+const { Schema } = mongoose;
+
+// Define a schema for notes
+const noteSchema = new Schema({
+  subject: String,
+  teacher: String,
+  chapter: String,
+  noteTitle: String,
+  noteLink: String,
+});
+
+// Create a Notes model
+const Notes = teachersConnection.model("Notes", noteSchema);
+
+// Route to get all notes
+app.get("/notes", async (req, res) => {
+  try {
+    // Fetch all notes from the Notes model
+    const notes = await Notes.find();
+
+    res.status(200).json(notes);
+  } catch (error) {
+    console.error("Error fetching notes:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Route to add a new note
+app.post("/add-note", async (req, res) => {
+  const { subject, teacher, chapter, noteTitle, noteLink } = req.body;
+
+  try {
+    // Save the new note to the Notes model
+    const newNotes = new Notes({
+      subject,
+      teacher,
+      chapter,
+      noteTitle,
+      noteLink,
+    });
+
+    await newNotes.save();
+
+    res.status(201).json({ message: "Notes added successfully!" });
+  } catch (error) {
+    console.error("Error adding note:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Define a schema for attendance records
+const attendanceSchema = new mongoose.Schema({
+  student: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
+  class: { type: mongoose.Schema.Types.ObjectId, ref: "YourClass" },
+  status: { type: String, enum: ["Present", "Absent"], required: true },
+});
+
+// Create an attendance model
+const Attendance = mongoose.model("Attendance", attendanceSchema);
+
+app.post("/mark-attendance", async (req, res) => {
+  const { studentId, classId, status } = req.body;
+
+  try {
+    // Check if the student and class exist
+    const student = await Student.findById(studentId);
+    const yourClass = await YourClass.findById(classId);
+
+    if (!student || !yourClass) {
+      return res.status(404).json({ error: "Student or class not found" });
+    }
+
+    // Create a new attendance record
+    const attendanceRecord = new Attendance({
+      student: studentId,
+      class: classId,
+      status,
+    });
+
+    await attendanceRecord.save();
+
+    res.status(201).json({ message: "Attendance marked successfully!" });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.get("/", (req, res) => {
   res.send("Hello from the backend!");
 });

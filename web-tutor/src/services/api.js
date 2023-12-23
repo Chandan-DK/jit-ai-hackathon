@@ -43,7 +43,20 @@ const hashPassword = (password) => {
   return password;
 };
 
+const getNotes = async () => {
+  try {
+    const response = await api.get("/notes"); // Assuming you have an endpoint like "/notes" on your server
+
+    console.log(response.data); // Handle the successful response, e.g., update state in your component
+    return response.data; // Return response data if needed
+  } catch (error) {
+    console.error("Error getting notes:", error.message);
+    throw error; // Throw the error for the component to handle
+  }
+};
+
 export default {
   signupUser,
   loginUser,
+  getNotes,
 };

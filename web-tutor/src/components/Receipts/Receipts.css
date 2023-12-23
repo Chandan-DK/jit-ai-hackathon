@@ -1,0 +1,22 @@
+/* Receipts.css */
+
+.receipts-container {
+    display: flex;
+    flex-direction: column; /* Updated to display as a column */
+    align-items: center; /* Center items horizontally */
+    margin: 20px;
+  }
+  
+  .receipt-box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px; /* Add margin between boxes */
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+  }
+  

@@ -109,36 +109,36 @@ function TeacherDashboard() {
 
       console.log("Class created successfully, and email sent.");
     } catch (error) {
-      console.error(error.message);
-      alert("An error occurred while creating the class. Please try again.");
+      //console.error(error.message);
+      // alert("An error occurred while creating the class. Please try again.");
     }
   };
 
   const handleCancelClass = async (cancelledClass) => {
-    const sendCancelEmailURL = "http://localhost:5000/send-cancel-email";
+    // const sendCancelEmailURL = "http://localhost:5000/send-cancel-email";
 
-    // Make an API call to send a cancel email
-    const sendEmailResponse = await fetch(sendCancelEmailURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        to: "john@example.com",
-        subject: "Class Details",
-        body: `Class was cancelled.\nDetails:\n\nStudent: ${
-          cancelledClass.student || "N/A"
-        }\nSubject: ${cancelledClass.subject || "N/A"}\nMeet Link: ${
-          cancelledClass.meetLink || "N/A"
-        }\nStart Time: ${cancelledClass.startTime || "N/A"}\nEnd Time: ${
-          cancelledClass.endTime || "N/A"
-        }`,
-      }),
-    });
+    // // Make an API call to send a cancel email
+    // const sendEmailResponse = await fetch(sendCancelEmailURL, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     to: "john@example.com",
+    //     subject: "Class Details",
+    //     body: `Class was cancelled.\nDetails:\n\nStudent: ${
+    //       cancelledClass.student || "N/A"
+    //     }\nSubject: ${cancelledClass.subject || "N/A"}\nMeet Link: ${
+    //       cancelledClass.meetLink || "N/A"
+    //     }\nStart Time: ${cancelledClass.startTime || "N/A"}\nEnd Time: ${
+    //       cancelledClass.endTime || "N/A"
+    //     }`,
+    //   }),
+    // });
 
-    if (!sendEmailResponse.ok) {
-      throw new Error("Failed to send cancel email notification.");
-    }
+    // if (!sendEmailResponse.ok) {
+    //   throw new Error("Failed to send cancel email notification.");
+    // }
     // Filter out the cancelled class from the state
     const updatedClasses = createdClasses.filter(
       (classItem) => classItem !== cancelledClass
@@ -146,6 +146,68 @@ function TeacherDashboard() {
 
     // Update the state to trigger a re-render without the cancelled class
     setCreatedClasses(updatedClasses);
+  };
+
+  const handleMarkAttendance = async () => {
+    // Replace with your actual endpoint for marking attendance
+    const markAttendanceURL = "http://localhost:5000/mark-attendance";
+
+    const students = [
+      {
+        _id: "65857cfd1183f5bdbe5af063",
+        username: "av",
+        email: "av@gmail.com",
+        password: "123456",
+        userType: "student",
+        __v: 0,
+      },
+      {
+        _id: "658586ab600184fca7c545eb",
+        username: "stu1",
+        email: "stu1@gmail.com",
+        password: "123456",
+        userType: "student",
+        __v: 0,
+      },
+      // Add more students as needed
+    ];
+    try {
+      // Check if all required fields are filled
+      if (!selectedStudent || !meetLink || !startTime || !endTime) {
+        alert("Please fill in all fields before marking attendance.");
+        return;
+      }
+
+      // Find the selected student in the sample database
+      const student = students.find((s) => s.username === selectedStudent);
+
+      // Assume 'createdClasses' has a corresponding class object
+      const createdClass = createdClasses[createdClasses.length - 1];
+
+      // Make an API call to mark attendance
+      const markAttendanceResponse = await fetch(markAttendanceURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          studentId: student._id,
+          classId: createdClass._id, // You should have an appropriate way to track class IDs
+          status: attendanceStatus[createdClasses.length - 1]
+            ? "Present"
+            : "Absent",
+        }),
+      });
+
+      if (!markAttendanceResponse.ok) {
+        throw new Error("Failed to mark attendance. Please try again.");
+      }
+
+      console.log("Attendance marked successfully.");
+    } catch (error) {
+      console.error(error.message);
+      alert("An error occurred while marking attendance. Please try again.");
+    }
   };
 
   return (
@@ -226,7 +288,6 @@ function TeacherDashboard() {
 
       <section className="upcoming-classes">
         <h3>Classes</h3>
-        <h3>Classes</h3>
         {createdClasses.map((createdClass, index) => (
           <div
             key={index}
@@ -253,7 +314,7 @@ function TeacherDashboard() {
                   backgroundColor: attendanceStatus[index] ? "green" : "",
                 }}
               >
-                Yes
+                Present
               </button>
               <button
                 onClick={() => handleToggleAttendance(index)}
@@ -265,9 +326,10 @@ function TeacherDashboard() {
                     attendanceStatus[index] === false ? "red" : "",
                 }}
               >
-                No
+                Absent
               </button>
             </div>
+
             <button
               onClick={() => handleCancelClass(createdClass)}
               className={`cancel-button ${
