@@ -286,6 +286,13 @@ function TeacherDashboard() {
         </form>
       </section>
 
+      <div className="flex-box feedback-section">
+          <h3>Send Feedback</h3>
+          <button onClick={() => (window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSdl8slH60xb7lYaQ4xYQx_TXA0DJH_HNZgGAMwftLbxmjAjYw/viewform?usp=sf_link')}>
+            Fill Feedback Form
+          </button>
+        </div>
+
       <section className="upcoming-classes">
         <h3>Classes</h3>
         {createdClasses.map((createdClass, index) => (
