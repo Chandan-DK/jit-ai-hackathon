@@ -88,7 +88,25 @@ const Notes = () => {
       />
       <button onClick={() => fileInput.click()}>Upload Notes</button>
 
-      {[...fetchedNotes, ...uploadedNotes].map((subject, subjectIndex) => (
+      {[
+        ...fetchedNotes,
+        ...uploadedNotes.map((uploadedNote) => ({
+          // Map the uploaded notes to have a similar structure to fetchedNotes
+          name: "Science",
+          teacher: "Prof. Nagraj", // You may customize this as needed
+          chapters: [
+            {
+              name: "Bio", // You may customize this as needed
+              resources: [
+                {
+                  type: uploadedNote.noteTitle, // You may customize this as needed
+                  file: uploadedNote.noteLink,
+                },
+              ],
+            },
+          ],
+        })),
+      ].map((subject, subjectIndex) => (
         <div key={subjectIndex} className="note-card">
           <div className="note-header">
             <h3>{subject.name || "Notes"}</h3>
