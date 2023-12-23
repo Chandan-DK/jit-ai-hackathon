@@ -114,6 +114,14 @@ const BotResponses = [
     required_words: ["receipts"],
     redirect_to: "/receipts",
   },
+  {
+    response_type: "redirect",
+    user_input: ["attendance"],
+    bot_response: "Fetching Attendance...",
+    required_words: ["attendance"],
+    redirect_to: "/studentdashboard",
+  },
+
   // Add more redirect responses as needed
 ];
 

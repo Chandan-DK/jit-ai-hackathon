@@ -1,47 +1,70 @@
-/* src/components/Login/Login.css */
-.login-container {
-  max-width: 400px;
-  margin: 50px auto;
+/* Login.css */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Adjust the height as needed */
+}
+
+form {
+  width: 300px; /* Adjust the width as needed */
   padding: 20px;
-  border: 1px solid #ddd;
+  background-color: #fff; /* Add your preferred background color */
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
 }
 
-.login-container h2 {
+h1 {
   text-align: center;
-  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-.login-container label {
-  display: block;
-  margin: 10px 0 5px;
-  color: #555;
+.input-box {
+  position: relative;
+  margin-bottom: 20px;
 }
 
-/* Update input styling to match MDB React UI Kit */
-.login-container input {
+input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
-  box-sizing: border-box;
-  border: 1px solid #ddd; /* Use a lighter color to match the MDB input style */
-  border-radius: 4px; /* Adjust to match the MDB input style */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
 }
 
-/* Update button styling to match MDB React UI Kit */
-.login-container button {
+.input-box svg {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #777;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+button {
   width: 100%;
-  padding: 12px;
-  background-color: #4caf50;
+  padding: 10px;
+  background-color: #007bff; /* Add your preferred button color */
   color: #fff;
   border: none;
-  border-radius: 4px; /* Adjust to match the MDB button style */
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
 }
 
-.login-container button:hover {
-  background-color: #45a049;
+.register-link {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.register-link a {
+  color: #007bff; /* Add your preferred link color */
+  text-decoration: none;
 }
